@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Login and Points Query</title>
+</head>
+<body>
+  <h1>User Login and Points Query</h1>
+  <div id="loginForm">
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+  </div>
+  <div id="queryForm" style="display: none;">
+    <button id="queryBtn">Query Points</button>
+    
+    <div id="userInfo" style="display: none;"></div> <!-- 新增显示用户信息的区域 -->
+    <div id="points"></div>
+  </div>
+
+  <script>
+
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      fetch('http://9obf1nbnz1flshsh3.neiwangyun.net:56673/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.message);
+        if (data.message === 'Login successful') {
+          document.getElementById('loginForm').style.display = 'none';
+          document.getElementById('queryForm').style.display = 'block';
+          document.getElementById('userInfo').style.display = 'block';
+          document.getElementById('userInfo').innerText = `Welcome, ${data.user.username}! `; // 显示用户信息
+        } else {
+          alert('Invalid username or password');
+        }
+      });
+    });
+
+    document.getElementById('queryBtn').addEventListener('click', function() {
+        //console.log(document.cookie);
+      fetch('http://9obf1nbnz1flshsh3.neiwangyun.net/points')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('points').innerText = `Points: ${data.points}`;
+      });
+    });
+  </script>
+</body>
+</html>
