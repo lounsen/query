@@ -24,7 +24,7 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      fetch('http://ewyagq4wdfvwshsh3.neiwangyun.net/login', {
+      fetch('https://ewyagq4wdfvwshsh3.neiwangyun.net/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -47,7 +47,7 @@
 
     document.getElementById('queryBtn').addEventListener('click', function() {
         //console.log(document.cookie);
-      fetch('http://ewyagq4wdfvwshsh3.neiwangyun.net/points')
+      fetch('https://ewyagq4wdfvwshsh3.neiwangyun.net/points')
       .then(response => response.json())
       .then(data => {
         document.getElementById('points').innerText = `Points: ${data.points}`;
