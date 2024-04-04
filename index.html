@@ -27,27 +27,37 @@
       fetch('https://ewyagq4wdfvwshsh3.neiwangyun.net/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+
         },
         body: JSON.stringify({ username, password })
       })
       .then(response => response.json())
       .then(data => {
-        console.log(data.message);
+        console.log(data);
         if (data.message === 'Login successful') {
-          document.getElementById('loginForm').style.display = 'none';
-          document.getElementById('queryForm').style.display = 'block';
-          document.getElementById('userInfo').style.display = 'block';
-          document.getElementById('userInfo').innerText = `Welcome, ${data.user.username}! `; // 显示用户信息
+            // 获取服务器返回的Session ID
+            const sessionId = data.sessionId;
+            // 存储Session ID，这里使用LocalStorage
+            localStorage.setItem('sessionId', sessionId);
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('queryForm').style.display = 'block';
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('userInfo').innerText = `Welcome, ${username}! `; // 显示用户信息
         } else {
-          alert('Invalid username or password');
+            alert('Invalid username or password');
         }
       });
     });
 
     document.getElementById('queryBtn').addEventListener('click', function() {
         //console.log(document.cookie);
-      fetch('https://ewyagq4wdfvwshsh3.neiwangyun.net/points')
+      fetch('https://ewyagq4wdfvwshsh3.neiwangyun.net/points',{
+        headers: {
+        'Content-Type': 'application/json',
+        'session-id': localStorage.sessionId
+        }
+    })
       .then(response => response.json())
       .then(data => {
         document.getElementById('points').innerText = `Points: ${data.points}`;
