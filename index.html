@@ -24,7 +24,7 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
-      fetch('https://breezy-assorted-dish.glitch.me/login', {
+      fetch('https://breezy-assorted-dish.glitch.me:6060/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@
 
     document.getElementById('queryBtn').addEventListener('click', function() {
         //console.log(document.cookie);
-      fetch('https://breezy-assorted-dish.glitch.me/points',{
+      fetch('https://breezy-assorted-dish.glitch.me:6060/points',{
         headers: {
         'Content-Type': 'application/json',
         'session-id': localStorage.sessionId
